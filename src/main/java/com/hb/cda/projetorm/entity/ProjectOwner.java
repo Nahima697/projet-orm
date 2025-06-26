@@ -3,6 +3,7 @@ package com.hb.cda.projetorm.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,7 @@ public class ProjectOwner implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "projectOwner")
-    private Set<Project> projects;
+    private Set<Project> projects= new HashSet<>();;
 
     public Integer getId() {
         return id;

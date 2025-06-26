@@ -2,6 +2,7 @@ package com.hb.cda.projetorm.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class Project {
     private LocalDate endDate;
     private Double budget;
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<JobApplication> jobApplications;
+    private Set<JobApplication> jobApplications= new HashSet<>();;
     @ManyToOne
     private ProjectOwner projectOwner;
     @ManyToMany

@@ -2,6 +2,7 @@ package com.hb.cda.projetorm.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Techno {
     private String description;
 
     @OneToMany(mappedBy = "techno")
-    private Set<DevMasteryTechno> devMasteryTechnos;
+    private Set<DevMasteryTechno> devMasteryTechnos= new HashSet<>();;
 
     public Integer getId() {
         return id;
