@@ -2,6 +2,7 @@ package com.hb.cda.projetorm.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,9 +16,9 @@ public class Theme {
     private Theme parent;
 
     @OneToMany(mappedBy = "parent")
-    private List<Theme> children;
+    private List<Theme> children= new ArrayList<>();
     @ManyToMany(mappedBy = "themes")
-    private List<Project> projects;
+    private List<Project> projects = new ArrayList<>();
 
     public Integer getId() {
         return id;
