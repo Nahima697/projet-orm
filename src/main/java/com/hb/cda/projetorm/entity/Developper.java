@@ -2,6 +2,7 @@ package com.hb.cda.projetorm.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,14 +12,17 @@ public class Developper  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String username;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @OneToMany(mappedBy = "developper", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DevMasteryTechno> devMasteryTechnos;
+    private List<DevMasteryTechno> devMasteryTechnos = new ArrayList<>();
+
     @OneToMany(mappedBy = "developper", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobApplication> jobApplications;
+    private List<JobApplication> jobApplications = new ArrayList<>();
 
     public Integer getId() {
         return id;

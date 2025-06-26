@@ -4,12 +4,11 @@ import com.hb.cda.projetorm.database.JpaUtil;
 import com.hb.cda.projetorm.entity.*;
 import com.hb.cda.projetorm.repository.*;
 import com.hb.cda.projetorm.repository.interfaces.DevelopperRepository;
-import com.hb.cda.projetorm.repository.interfaces.JobApplicationRepository;
-import com.hb.cda.projetorm.repository.interfaces.ProjectOwnerRepository;
 import com.hb.cda.projetorm.repository.interfaces.ProjectRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +60,19 @@ public class Main {
             dev2.setUser(user2);
             em.persist(dev2);
 
+            //Techno
+            Techno javaTechno = new Techno();
+            javaTechno.setName("Java");
+            em.persist(javaTechno);
+
+            //DevMasteryTechno
+            DevMasteryTechno devMastery = new DevMasteryTechno();
+            devMastery.setDevelopper(dev);
+            devMastery.setTechno(javaTechno);
+            devMastery.setMastery(Mastery.SENIOR);
+            em.persist(devMastery);
+            dev.getDevMasteryTechnos().add(devMastery);
+
             // Projects
             Project project1 = new Project();
             project1.setProjectName("Gestion de projets");
@@ -85,24 +97,39 @@ public class Main {
             dev.setJobApplications(jobs);
             em.getTransaction().commit();
 
-            // Repos
-            DevelopperRepository developperRepository = new DevelopperRepositoryImpl(emf, Developper.class);
-            for (Developper d : developperRepository.findAll()) {
-                System.out.println(d);
-            }
-
-            JobApplicationRepository jobApplicationRepository = new JobApplicationRepositoryImpl(emf, JobApplication.class);
-            System.out.println(jobApplicationRepository.findByProjectName("Site e-commerce"));
-
-            ProjectOwnerRepository projectOwnerRepository = new ProjectOwnerRepositoryImpl(emf, ProjectOwner.class);
-            for (ProjectOwner po : projectOwnerRepository.findAll()) {
-                System.out.println(po);
-            }
-
+            //Initialisation des repo de type interface
+            DevelopperRepository devrepo = new DevelopperRepositoryImpl(emf, Developper.class);
             ProjectRepository projectRepository = new ProjectRepositoryImpl(emf, Project.class);
-            for (Project p : projectRepository.findByBudget(project1.getBudget())) {
-                System.out.println(p);
-            }
+
+            // ==========================================================
+            // TESTS DE DEVELOPPEUR REPOSITORY
+            // ==========================================================
+            List<Developper> allDevelopers = devrepo.findAll();
+            System.out.println("Tous les développeurs : " + allDevelopers);
+
+            List<Developper> javaDevs = devrepo.findByTechno(javaTechno);
+            System.out.println("Développeurs maîtrisant Java : " + javaDevs);
+
+            List<Developper> javaExpertDevs = devrepo.findByMasteryTechno(javaTechno, Mastery.SENIOR);
+            System.out.println("Développeurs maîtrisant Java niveau 'Expert' : " + javaExpertDevs);
+
+            // ==========================================================
+            // TESTS DE PROJECT REPOSITORY
+            // ==========================================================
+            List<Project> projectsByEndDate = projectRepository.findByEndDate(LocalDate.now().plusDays(30));
+            System.out.println("Projets finissant à la date donnée : " + projectsByEndDate);
+
+            List<Project> projectsByBudget = projectRepository.findByBudget(15000.0);
+            System.out.println("Projets ayant un budget <= 15000.0 : " + projectsByBudget);
+
+            List<Project> projectsByStatus = projectRepository.findByStatus(Status.PENDING);
+            System.out.println("Projets ayant le status EN_COURS : " + projectsByStatus);
+
+            List<Project> projectsByJobAppStatus = projectRepository.findByJobApplicationStatus(Status.PENDING);
+            System.out.println("Projets ayant des JobApplications EN_COURS : " + projectsByJobAppStatus);
+
+            List<Project> projectsWithTheme = projectRepository.findByProjectTheme(springTheme);
+            System.out.println("Projets ayant pour thème 'Spring' : " + projectsWithTheme);
         } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();

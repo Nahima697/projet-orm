@@ -81,7 +81,7 @@ implements ProjectRepository {
     }
     public List<Project> findByProjectTheme(Theme theme) {
         try(EntityManager em = emf.createEntityManager()) {
-            return em.createQuery("SELECT FROM Project p LEFT JOIN FETCH p.theme t WHERE t = :theme",Project.class)
+            return em.createQuery("SELECT p FROM Project p LEFT JOIN FETCH p.themes t WHERE t = :theme",Project.class)
                     .setParameter("theme", theme)
                     .getResultList();
         }

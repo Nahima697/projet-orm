@@ -29,4 +29,20 @@ public class DevMasteryTechno {
     public void setMastery(Mastery mastery) {
         this.mastery = mastery;
     }
+
+    public Techno getTechno() {
+        return techno;
+    }
+
+    public void setTechno(Techno techno) {
+        this.techno = techno;
+    }
+
+    public Developper getDevelopper() {
+        return developper;
+    }
+
+    public void setDevelopper(Developper developper) {
+        this.developper = developper;
+    }
 }
