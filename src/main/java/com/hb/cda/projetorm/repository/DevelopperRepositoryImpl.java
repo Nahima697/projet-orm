@@ -4,14 +4,16 @@ import java.util.List;
 
 import com.hb.cda.projetorm.entity.Mastery;
 import com.hb.cda.projetorm.entity.Techno;
+import com.hb.cda.projetorm.repository.interfaces.DevelopperRepository;
 import com.hb.cda.projetorm.repository.util.AbstractGenericRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceException;
 
-public class DevelopperRepository extends AbstractGenericRepository<Developper,Integer> {
+public class DevelopperRepositoryImpl extends AbstractGenericRepository<Developper,Integer>
+        implements DevelopperRepository {
 
-    public DevelopperRepository(EntityManagerFactory emf, Class<Developper> entityClass) {
+    public DevelopperRepositoryImpl(EntityManagerFactory emf, Class<Developper> entityClass) {
         super(emf, entityClass);
     }
 
@@ -28,9 +30,9 @@ public class DevelopperRepository extends AbstractGenericRepository<Developper,I
 
     public List<Developper> findByTechno(Techno techno) {
         try (EntityManager em = emf.createEntityManager()) {
-        return em.createQuery("SELECT d FROM Developper  d LEFT JOIN FETCH d.devMasteryTechnos dmt WHERE dmt.techno = :techno")
-                .setParameter("techno",techno)
-                .getResultList();
+            return em.createQuery("SELECT d FROM Developper  d LEFT JOIN FETCH d.devMasteryTechnos dmt WHERE dmt.techno = :techno")
+                    .setParameter("techno",techno)
+                    .getResultList();
         }
         catch(PersistenceException e) {
             System.err.println(e);

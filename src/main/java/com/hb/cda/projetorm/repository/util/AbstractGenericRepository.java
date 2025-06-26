@@ -1,6 +1,6 @@
 package com.hb.cda.projetorm.repository.util;
 
-import com.hb.cda.projetorm.database.JpaUtil;
+import com.hb.cda.projetorm.repository.interfaces.GenericRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceException;
@@ -8,11 +8,11 @@ import jakarta.persistence.PersistenceException;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractGenericRepository <T, K> {
+public abstract class AbstractGenericRepository <T, K> implements GenericRepository<T, K> {
 
-    protected EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+    protected EntityManagerFactory emf ;
     protected Class<T> entityClass;
-    public AbstractGenericRepository(EntityManagerFactory emf, Class<T> entityClass) {
+    protected AbstractGenericRepository(EntityManagerFactory emf, Class<T> entityClass) {
         this.emf = emf;
         this.entityClass = entityClass;
     }

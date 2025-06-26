@@ -1,6 +1,7 @@
 package com.hb.cda.projetorm.repository;
 
 import com.hb.cda.projetorm.entity.ProjectOwner;
+import com.hb.cda.projetorm.repository.interfaces.ProjectOwnerRepository;
 import com.hb.cda.projetorm.repository.util.AbstractGenericRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,9 +10,10 @@ import jakarta.persistence.criteria.*;
 
 import java.util.List;
 
-public class ProjectOwnerRepository extends AbstractGenericRepository<ProjectOwner,Integer> { ;
+public class ProjectOwnerRepositoryImpl extends AbstractGenericRepository<ProjectOwner,Integer>
+implements ProjectOwnerRepository {
 
-    public ProjectOwnerRepository(EntityManagerFactory emf, Class<ProjectOwner> entityClass) {
+    public ProjectOwnerRepositoryImpl(EntityManagerFactory emf, Class<ProjectOwner> entityClass) {
         super(emf, entityClass);
     }
 
@@ -29,5 +31,4 @@ public class ProjectOwnerRepository extends AbstractGenericRepository<ProjectOwn
         }
         return List.of();
     }
-
 }

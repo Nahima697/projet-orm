@@ -3,6 +3,7 @@ package com.hb.cda.projetorm.repository;
 import com.hb.cda.projetorm.entity.Project;
 import com.hb.cda.projetorm.entity.Status;
 import com.hb.cda.projetorm.entity.Theme;
+import com.hb.cda.projetorm.repository.interfaces.ProjectRepository;
 import com.hb.cda.projetorm.repository.util.AbstractGenericRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -12,9 +13,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-public class ProjectRepository extends AbstractGenericRepository<Project,Integer> {
+public class ProjectRepositoryImpl extends AbstractGenericRepository<Project,Integer>
+implements ProjectRepository {
 
-    public ProjectRepository(EntityManagerFactory emf, Class<Project> entityClass) {
+    public ProjectRepositoryImpl(EntityManagerFactory emf, Class<Project> entityClass) {
         super(emf, entityClass);
     }
 

@@ -2,7 +2,7 @@ package com.hb.cda.projetorm.repository;
 
 import com.hb.cda.projetorm.entity.JobApplication;
 import com.hb.cda.projetorm.entity.Project;
-import com.hb.cda.projetorm.entity.ProjectOwner;
+import com.hb.cda.projetorm.repository.interfaces.JobApplicationRepository;
 import com.hb.cda.projetorm.repository.util.AbstractGenericRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -11,8 +11,9 @@ import jakarta.persistence.criteria.*;
 
 import java.util.List;
 
-public class JobApplicationRepository extends AbstractGenericRepository<JobApplication,Integer> {
-    public JobApplicationRepository(EntityManagerFactory emf, Class<JobApplication> entityClass) {
+public class JobApplicationRepositoryImpl extends AbstractGenericRepository<JobApplication,Integer>
+implements JobApplicationRepository {
+    public JobApplicationRepositoryImpl(EntityManagerFactory emf, Class<JobApplication> entityClass) {
         super(emf, entityClass);
     }
 
